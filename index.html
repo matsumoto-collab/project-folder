@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仮設足場工事 利益計算ツール</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <h2>ログイン</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">ユーザー名:</label>
+                    <input type="text" id="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">パスワード:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">ログイン</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="container" style="display:none;">
+        <header>
+            <h1>仮設足場工事 利益計算ツール</h1>
+            <div class="login-status"></div>
+        </header>
+        
+        <div class="main-content">
+            <section class="input-section">
+                <h2>案件登録</h2>
+                <form id="project-form">
+                    <div class="form-group">
+                        <label for="foreman">職長:</label>
+                        <input type="text" id="foreman" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="date">日付:</label>
+                        <input type="date" id="date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="manager">担当:</label>
+                        <input type="text" id="manager" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="client">元請け:</label>
+                        <input type="text" id="client" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="site-name">現場名:</label>
+                        <input type="text" id="site-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="work-type">作業内容:</label>
+                        <select id="work-type" required>
+                            <option value="組立">組立</option>
+                            <option value="解体">解体</option>
+                            <option value="その他">その他</option>
+                            <option value="積込">積込</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contract-amount">請け金額 (円):</label>
+                        <input type="number" id="contract-amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="purchase-cost">仕入れ (円):</label>
+                        <input type="number" id="purchase-cost">
+                    </div>
+                    <div class="form-group">
+                        <label for="workers">人数:</label>
+                        <input type="number" id="workers" min="1" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="hours">時間 (時間):</label>
+                        <input type="number" id="hours" step="0.5" min="0.5" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicles">車両 (台):</label>
+                        <input type="number" id="vehicles" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="overtime">早出/残業/積込 (円):</label>
+                        <input type="number" id="overtime" min="0">
+                    </div>
+                    <button type="submit" class="btn">計算して登録</button>
+                </form>
+            </section>
+            
+            <section class="result-section">
+                <h2>計算結果</h2>
+                <div id="calculation-result">
+                    <p>データを入力して計算してください</p>
+                </div>
+            </section>
+            
+            <section class="list-section">
+                <h2>案件一覧</h2>
+                <div class="filter-controls">
+                    <input type="text" id="search-input" placeholder="現場名または元請けで検索">
+                    <select id="date-filter">
+                        <option value="">すべての日付</option>
+                    </select>
+                    <button id="export-btn" class="btn">Excelにエクスポート</button>
+                </div>
+                <div class="table-container">
+                    <table id="projects-table">
+                        <thead>
+                            <tr>
+                                <th>職長</th>
+                                <th>日付</th>
+                                <th>担当</th>
+                                <th>元請け</th>
+                                <th>現場名</th>
+                                <th>作業内容</th>
+                                <th>請け金額</th>
+                                <th>仕入れ</th>
+                                <th>予算</th>
+                                <th>人数</th>
+                                <th>時間</th>
+                                <th>金額</th>
+                                <th>車両</th>
+                                <th>早出/残業/積込</th>
+                                <th>合計</th>
+                                <th>粗利</th>
+                                <th>%</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="chart-section">
+                <h2>利益分析</h2>
+                <div class="chart-container">
+                    <canvas id="profitChart"></canvas>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
